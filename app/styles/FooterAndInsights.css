@@ -1,0 +1,516 @@
+/* ==========================================================================
+   INSIGHTS SECTION (CSS Module)
+   ========================================================================== */
+.zyqxa-insights-section {
+  background-color: #0b0b0b;
+  color: #ffffff;
+  padding: 80px 20px;
+  font-family: inherit;
+}
+
+.insights-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.insights-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.insights-main-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
+}
+
+.insights-tabs {
+  display: inline-flex;
+  background-color: #161616;
+  padding: 6px;
+  border-radius: 50px;
+  border: 1px solid #262626;
+  gap: 8px;
+}
+
+.insight-tab-btn {
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  padding: 10px 20px;
+  border-radius: 40px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.insight-tab-btn.active,
+.insight-tab-btn:hover {
+  background-color: #262626;
+  color: #ffffff;
+}
+
+.insights-grid-content {
+  display: none;
+}
+
+.insights-grid-content.active-tab {
+  display: block;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
+  gap: 24px;
+}
+
+.insight-card {
+  background-color: #121212;
+  border: 1px solid #222;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.insight-card:hover {
+  transform: translateY(-5px);
+  border-color: #00f5ff;
+}
+
+.insight-card-img-wrapper {
+  height: 220px;
+  background: linear-gradient(135deg, #1f1f1f 0%, #111111 100%);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #222;
+  padding: 20px;
+  text-align: center;
+}
+
+.podcast-bg1 { background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%); }
+.podcast-bg2 { background: linear-gradient(135deg, #3c1361 0%, #111111 100%); }
+.whitehouse-bg { background: linear-gradient(135deg, #0f172a 0%, #020617 100%); }
+.wef-bg { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
+.treasury-bg { background: linear-gradient(135deg, #172554 0%, #0f172a 100%); }
+
+.insight-logo-watermark, .institution-brand-text {
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.insight-category-tag {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.insight-card-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.insight-meta {
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+.insight-card-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #f3f4f6;
+  transition: color 0.2s ease;
+}
+
+.insight-card:hover .insight-card-title {
+  color: #f3f4f6;
+}
+
+.explore-insights-wrapper {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.explore-insights-btn {
+  display: inline-block;
+  background-color: #161616;
+  color: #ffffff;
+  border: 1px solid #333;
+  padding: 12px 32px;
+  border-radius: 5px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.explore-insights-btn:hover {
+  background-color: #f97316;
+  border-color: #f97316;
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   NEWSLETTER SECTION (CSS Module)
+   ========================================================================== */
+.zyqxa-newsletter-section {
+  position: relative;
+  width: 100%;
+  min-height: 500px;
+  background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1600&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  font-family: inherit;
+}
+
+.newsletter-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(2px);
+  z-index: 1;
+}
+
+.newsletter-container {
+  position: relative;
+  z-index: 2;
+  max-width: 650px;
+  width: 100%;
+  text-align: center;
+  color: #ffffff;
+}
+
+.newsletter-header {
+  margin-bottom: 36px;
+}
+
+.newsletter-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+  color: #ffffff;
+}
+
+.newsletter-subtitle {
+  font-size: 1.15rem;
+  color: #d1d5db;
+  font-weight: 400;
+}
+
+.newsletter-form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.newsletter-input-group {
+  display: flex;
+  width: 100%;
+  max-width: 500px;
+  background: rgba(26, 26, 26, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 6px;
+  backdrop-filter: blur(8px);
+}
+
+.newsletter-email-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 12px 16px;
+  color: #ffffff;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.newsletter-email-input::placeholder {
+  color: #9ca3af;
+}
+
+.newsletter-signup-btn {
+  background-color: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.newsletter-signup-btn:hover {
+  background-color: #f97316;
+  color: #ffffff;
+}
+
+.newsletter-footer-icons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.icon-link {
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.2s ease;
+}
+
+.icon-link:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 600px) {
+  .newsletter-title {
+    font-size: 2rem;
+  }
+  .newsletter-input-group {
+    flex-direction: column;
+    background: transparent;
+    border: none;
+    gap: 12px;
+  }
+  .newsletter-email-input {
+    background: rgba(26, 26, 26, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .newsletter-signup-btn {
+    width: 100%;
+    padding: 14px;
+  }
+}
+
+/* ==========================================================================
+   FOOTER SECTIONS (CSS Module)
+   ========================================================================== */
+.zyqxa-footer-section {
+  background-color: #0b0b0b;
+  color: #ffffff;
+  padding: 80px 40px;
+  border-top: 1px solid #1f1f1f;
+  font-family: inherit;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+}
+
+.footer-heading {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+}
+
+.footer-links-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-links-list li a {
+  color: #9ca3af;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 400;
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.footer-links-list li a:hover {
+  color: #ffffff;
+  transform: translateX(3px);
+}
+
+.external-arrow {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .zyqxa-footer-section {
+    padding: 50px 20px;
+  }
+  .footer-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   LEGAL & FOOTER SIGNATURE SECTION (CSS Module)
+   ========================================================================== */
+.zyqxa-legal-footer-section {
+  background-color: #0b0b0b;
+  color: #9ca3af;
+  padding: 60px 40px 40px 40px;
+  font-family: inherit;
+  border-top: 1px solid #1f1f1f;
+}
+
+.legal-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.legal-disclaimers-text {
+  font-size: 0.75rem;
+  line-height: 1.6;
+  margin-bottom: 50px;
+  color: #888888;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.disclaimer-highlight {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.brand-huge-signature {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0 50px 0;
+}
+
+.footer-divider {
+  width: 100%;
+  height: 1px;
+  background-color: #1f1f1f;
+  margin-bottom: 25px;
+}
+
+.footer-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-size: 0.85rem;
+}
+
+.copyright-text {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.bottom-legal-links {
+  display: flex;
+  gap: 24px;
+}
+
+.bottom-legal-links a {
+  color: #9ca3af;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.bottom-legal-links a:hover {
+  color: #ffffff;
+}
+
+.bottom-social-icons {
+  display: flex;
+  gap: 16px;
+}
+
+.bottom-social-icons a {
+  color: #9ca3af;
+  transition: color 0.2s ease;
+}
+
+.bottom-social-icons a:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .zyqxa-legal-footer-section {
+    padding: 40px 20px 30px 20px;
+  }
+  .footer-bottom-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+
+.zyqxa-svg-logo-container {
+  width: 100%;
+  max-width: 450px;
+  display: flex;
+  justify-content: center;
+}
+
+.zyqxa-logo-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ==========================================================================
+   GLOBAL SCROLL ANIMATION UTILITY
+   ========================================================================== */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}

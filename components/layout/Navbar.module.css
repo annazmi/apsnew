@@ -1,0 +1,454 @@
+/* ==========================================================================
+   2. Header, Navigation, & Dropdowns (CSS Module) - Updated & Fixed
+   ========================================================================== */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  background: transparent;
+}
+
+.topBanner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.8rem;
+  background: #000;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+  transition: max-height 0.28s ease, opacity 0.2s ease, padding 0.28s ease;
+  max-height: 100px;
+  opacity: 1;
+  overflow: hidden;
+  width: 100%;
+}
+
+.topBanner a { 
+  color: var(--cyan, #00f5ff);
+}
+
+.headerInner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  max-width: 1280px;
+  min-height: 72px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+  transition: min-height 0.28s ease, max-width 0.28s ease, padding 0.28s ease;
+}
+
+.headerScrolled {
+  background: transparent;
+  padding-top: 12px;
+  transition: padding-top 0.28s ease;
+}
+
+.headerScrolled .topBanner {
+  max-height: 0;
+  padding: 0;
+  opacity: 0;
+}
+
+.headerScrolled .headerInner {
+  width: 100%;
+  max-width: 720px;
+  min-height: 54px;
+  padding: 0 1.25rem;
+  border-radius: 12px;
+  background: #000;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+}
+
+.headerScrolled .nav {
+  background: transparent;
+  border-color: transparent;
+  backdrop-filter: none;
+}
+
+.logo img { 
+  display: block; 
+  width: auto; 
+  max-height: 48px; 
+  transition: max-height 0.28s ease;
+}
+
+.headerScrolled .logo img {
+  max-height: 36px;
+}
+
+.nav {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 2;
+  background: transparent;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+}
+
+.navLink, .headerDashboardBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.75rem;
+  margin: 0 1px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  border: 1px solid transparent;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.navLink:hover, .navLink:focus-visible { 
+  color: #fff; 
+  border-color: var(--cyan, #00f5ff); 
+  outline: none; 
+}
+
+.navLink[aria-expanded="true"] {
+  border-color: var(--cyan, #00f5ff);
+}
+
+.headerDashboardBtn { 
+  background: var(--cyan, #00f5ff); 
+  border-color: var(--cyan, #00f5ff); 
+  color: #000; 
+  padding: 0.55rem 0.8rem;
+}
+
+.headerDashboardBtn:hover, .headerDashboardBtn:focus-visible { 
+  background: rgba(0, 245, 255, 0.24); 
+  border-color: rgba(0, 245, 255, 0.24); 
+  color: white; 
+}
+
+/* --- Dropdown Styles --- */
+.productsDropdownWrapper, 
+.resourcesDropdownWrapper, 
+.ecosystemDropdownWrapper, 
+.aboutDropdownWrapper { 
+  position: relative; 
+}
+
+.dropdownBox {
+  position: fixed;
+  top: 51px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(720px, calc(100vw - 32px));
+  min-height: 220px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  background: #000000;
+  border: 1px solid var(--card-border, rgba(255, 255, 255, 0.12));
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease, top 0.5s cubic-bezier(0.2, 1, 0.2, 1);
+  z-index: 10010;
+}
+
+.productsDropdownWrapper:hover .dropdownBox, 
+.productsDropdownWrapper:focus-within .dropdownBox,
+.menuOpen .dropdownBox,
+.resourcesDropdownWrapper:hover .dropdownBox,
+.resourcesDropdownWrapper:focus-within .dropdownBox,
+.ecosystemDropdownWrapper:hover .dropdownBox,
+.ecosystemDropdownWrapper:focus-within .dropdownBox,
+.aboutDropdownWrapper:hover .dropdownBox,
+.aboutDropdownWrapper:focus-within .dropdownBox { 
+  opacity: 1; 
+  visibility: visible; 
+}
+
+.dropdownBox::before { 
+  content: ''; 
+  position: absolute; 
+  top: -24px; 
+  left: 0; 
+  width: 100%; 
+  height: 24px; 
+}
+
+.dropdownGridLayout { 
+  display: grid; 
+  grid-template-columns: minmax(0, 1.1fr) minmax(250px, 1fr); 
+  gap: 22px; 
+  align-items: stretch; 
+}
+
+.dropdownLeftColumn, .dropdownRightColumn { 
+  display: flex; 
+  flex-direction: column; 
+}
+
+.dropdownLeftColumn { 
+  gap: 6px; 
+}
+
+.resourcesDropdownWrapper .dropdownLeftColumn, 
+.ecosystemDropdownWrapper .dropdownLeftColumn { 
+  justify-content: center; 
+}
+
+.dropdownRightColumn { 
+  justify-content: flex-start; 
+  gap: 12px; 
+}
+
+.dropdownInfrastructureWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdownAssetRow { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+  padding: 4px 12px; 
+  border-radius: 10px; 
+  transition: background-color 0.2s ease; 
+  cursor: pointer; 
+}
+
+.dropdownAssetRow:hover, .dropdownAssetRow.active { 
+  background: rgba(255, 255, 255, 0.04); 
+}
+
+.dropdownLogoBox { 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  width: 30px; 
+  height: 30px; 
+  border-radius: 6px; 
+  background: rgba(1, 11, 34, 0.95); 
+  flex-shrink: 0; 
+}
+
+.dropdownAssetLogo { 
+  width: 40px; 
+  height: 40px; 
+  object-fit: contain; 
+}
+
+.idryLogo { transform: translateY(1px); }
+.zidrLogo, .vaultPortalLogo { transform: translate(-0.5px, 0); }
+.yieldPortalLogo { transform: none; }
+.sovereignPortalLogo { transform: translate(-0.5px, 1.5px); }
+.settlementLayerLogo { transform: translate(-0.5px, 2px); }
+.crossChainBridgeLogo { transform: translate(-0.5px, 4px); }
+.transparencyHubLogo, .protocolDocsLogo { transform: translate(-0.5px, 1px); }
+
+/* Logo Adjustments with Scale */
+.zyqxaEcosystemLogo { transform: translate(-3.5px, 0px) scale(1.45); }
+.catalystLogo { transform: translate(0px, 1px) scale(1.45); }
+.zyqxaFoundationLogo { transform: translate(-0.5px, -0.5px) scale(1.45); }
+.docsFaqsLogo { transform: translate(0px, 0px) scale(1.45); }
+.trustSecurityLogo { transform: translate(0px, 0px) scale(1.45); }
+.careersLogo { transform: translate(2px, 0px) scale(1.45); }
+.teamLogo { transform: translate(1px, -1px) scale(1.45); }
+.contactUsLogo { transform: translate(-1px, 0px) scale(1.45); }
+.zyqxaLearnLogo { transform: translate(-0.5px, -1px); }
+
+.dropdownAssetCopy { display: flex; flex-direction: column; }
+.dropdownTitleWrapper { display: flex; align-items: center; gap: 12px; }
+.dropdownAssetTitle { font-size: 15px; font-weight: 600; color: #fff; }
+.dropdownAssetTag { font-size: 11px; color: #94a3b8; }
+.dropdownAssetDesc { font-size: 10.5px; line-height: 1.3; color: rgba(213, 218, 224, 0.92); }
+.dropdownHeading { margin: 12px 0 6px; font-size: 13px; font-weight: 600; color: #fff; }
+.dropdownSubgroupHeading { margin-top: 26px; }
+
+.dropdownPreviewBox {
+  position: relative;
+  width: 100%;
+  height: 162px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(1, 25, 72, 0.98), rgba(1, 18, 48, 0.95));
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+.resourcesDropdownWrapper .dropdownPreviewBox, 
+.ecosystemDropdownWrapper .dropdownPreviewBox { 
+  height: 100%; 
+}
+
+.previewLogoContainer { 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  width: 100%; 
+  height: 100%; 
+}
+
+.floatingLogo {
+  width: 140px; 
+  height: 140px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.3));
+}
+
+.resourcesDropdownWrapper .floatingLogo, 
+.ecosystemDropdownWrapper .floatingLogo, 
+.aboutDropdownWrapper .floatingLogo { 
+  max-width: 220px; 
+  max-height: 220px; 
+}
+
+/* --- Header Scroll States --- */
+.headerScrolled .dropdownBox { 
+  top: 60px; 
+}
+
+/* --- Mobile Navigation --- */
+.hamburger { 
+  display: none; 
+  flex-direction: column; 
+  justify-content: center; 
+  gap: 5px; 
+  width: 40px; 
+  height: 40px; 
+  border-radius: 0.5rem; 
+  background: rgba(255, 255, 255, 0.05); 
+  border: 1px solid rgba(255, 255, 255, 0.1); 
+  cursor: pointer;
+}
+
+.bar { 
+  width: 18px; 
+  height: 2px; 
+  border-radius: 2px; 
+  background: #fff; 
+  transition: all 0.35s ease; 
+  margin: 0 auto;
+}
+
+.hamburger.open { 
+  background: rgba(0, 245, 255, 0.08); 
+  border-color: rgba(0, 245, 255, 0.3); 
+}
+
+.hamburger.open .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.mobileOverlay { 
+  position: fixed; 
+  inset: 0; 
+  z-index: 55; 
+  background: rgba(0, 0, 0, 0.6); 
+  backdrop-filter: blur(4px); 
+  opacity: 0; 
+  pointer-events: none; 
+  transition: opacity 0.35s ease; 
+}
+
+.mobileOverlay.show { 
+  opacity: 1; 
+  pointer-events: all; 
+}
+
+.mobileDrawer { 
+  position: fixed; 
+  top: 0; 
+  bottom: 0; 
+  right: -100%; 
+  width: min(320px, 85vw); 
+  z-index: 60; 
+  background: rgba(3, 5, 20, 0.98); 
+  border-left: 1px solid rgba(0, 245, 255, 0.12); 
+  backdrop-filter: blur(24px); 
+  transition: transform 0.35s ease, opacity 0.35s ease, right 0.35s ease; 
+  transform: translateX(20px); 
+  opacity: 0; 
+}
+
+.mobileDrawer.open { 
+  right: 0; 
+  opacity: 1; 
+  transform: translateX(0); 
+}
+
+.drawerInner { 
+  display: flex; 
+  flex-direction: column; 
+  padding: 6rem 2rem 2rem; 
+  gap: 0.5rem; 
+}
+
+.drawerLink { 
+  padding: 1rem 1.25rem; 
+  border-radius: 0.75rem; 
+  color: rgba(255, 255, 255, 0.7); 
+  text-transform: uppercase; 
+  letter-spacing: 0.2em; 
+  font-size: 13px; 
+  font-weight: 600; 
+  text-decoration: none;
+}
+
+.drawerClose { 
+  position: absolute; 
+  top: 1rem; 
+  right: 1rem; 
+  width: 2.4rem; 
+  height: 2.4rem; 
+  border-radius: 50%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  background: rgba(255, 255, 255, 0.05); 
+  border: 1px solid rgba(255, 255, 255, 0.12); 
+  color: #fff; 
+  font-size: 1.25rem; 
+  cursor: pointer;
+}
+
+/* Responsif untuk layar kecil / mobile */
+@media (max-width: 768px) {
+  .nav {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
+  .headerInner {
+    padding: 0.8rem 1rem;
+  }
+
+  .headerScrolled .headerInner {
+    min-height: 54px;
+    padding: 0.45rem 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .topBanner,
+  .headerInner,
+  .logo img {
+    transition-duration: 0.01ms;
+  }
+}

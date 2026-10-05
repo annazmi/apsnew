@@ -1,0 +1,412 @@
+/* ==========================================================================
+   NEXUS TECHNOLOGY SECTION (ZYQXA INFINITE SLIDER - CSS Module)
+   ========================================================================== */
+.nexus-section {
+  background-color: #050505;
+  color: #ffffff;
+  padding: 100px 20px;
+  position: relative;
+  overflow: hidden;
+  font-family: inherit;
+  width: 100%;
+}
+
+.nexus-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.nexus-subtitle {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #888888;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.nexus-title {
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 60px;
+  letter-spacing: -1px;
+}
+
+.nexus-title .highlight-text {
+  color: #888888;
+  font-weight: 500;
+}
+
+.nexus-slider-wrapper {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto 40px auto;
+  overflow: hidden;
+  position: relative;
+  padding: 40px 0;
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+.nexus-track {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  width: max-content;
+  will-change: transform;
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  padding-left: calc(50% - 225px); 
+  padding-right: calc(50% - 225px);
+}
+
+.nexus-card {
+  background: #0d0d0d;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 40px 30px;
+  flex: 0 0 450px;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  opacity: 0.25;
+  transform: scale(0.85);
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), 
+              opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), 
+              background 0.8s ease, 
+              border-color 0.8s ease, 
+              box-shadow 0.8s ease;
+}
+
+.nexus-card.active {
+  background: #121212;
+  border-color: rgba(0, 245, 255, 0.4);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 245, 255, 0.1);
+  opacity: 1;
+  transform: scale(1.1);
+  z-index: 2;
+}
+
+.nexus-logo-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00f5ff;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.logo-text-badge {
+  background: #002b5b;
+  color: #ffffff;
+}
+
+.nexus-token-name {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.nexus-info-box {
+  width: 100%;
+  max-width: 700px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.nexus-desc {
+  width: 100%;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #aaaaaa;
+  text-align: center;
+}
+
+.nexus-cta-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.nexus-contact-btn {
+  display: inline-block;
+  background: #ffffff;
+  color: #000000;
+  padding: 14px 32px;
+  border-radius: 30px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.nexus-contact-btn:hover {
+  background: #00f5ff;
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   ZYQXA BRIDGE SECTION (CSS Module)
+   ========================================================================== */
+.zyqxa-bridge-section {
+  position: relative;
+  width: 100%;
+  min-height: 105vh;
+  background-color: #0b0b0b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 90px;
+  overflow: hidden;
+  text-align: center;
+  color: #ffffff;
+}
+
+.arch-absolute-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1600px;
+  height: 650px;
+  pointer-events: none;
+}
+
+.arch-svg-curve {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 -12px 35px rgba(249, 115, 22, 0.3));
+}
+
+.arch-peak-badge {
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 36px;
+  background: #141414;
+  border: 1px solid rgba(249, 115, 22, 0.6);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 22px rgba(249, 115, 22, 0.5);
+  pointer-events: auto;
+  z-index: 3;
+}
+
+.arch-badge-logo {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.bridge-content-wrapper {
+  position: relative;
+  z-index: 2;
+  max-width: 750px;
+  padding: 0 20px;
+  margin-top: 120px;
+}
+
+.bridge-tagline {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: #9ca3af;
+  margin-bottom: 16px;
+  display: inline-block;
+}
+
+.bridge-title {
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.bridge-title-sub {
+  color: #737373;
+  font-weight: 600;
+}
+
+.bridge-description {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #a3a3a3;
+  max-width: 620px;
+  margin: 0 auto 36px auto;
+}
+
+.bridge-explore-btn {
+  display: inline-block;
+  background-color: #ffffff;
+  color: #0b0b0b;
+  padding: 14px 30px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.15);
+}
+
+.bridge-explore-btn:hover {
+  background-color: #f3f4f6;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(255, 255, 255, 0.25);
+}
+
+.moving-box {
+  offset-path: path('M 100 750 A 700 700 0 0 1 1500 750');
+  animation-duration: 2.2s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  animation-play-state: paused; 
+}
+
+.moving-box-left {
+  animation-name: slideToCenterLeft;
+}
+
+.moving-box-right {
+  animation-name: slideToCenterRight;
+}
+
+.zyqxa-bridge-section.animate-active .moving-box {
+  animation-play-state: running;
+}
+
+@keyframes slideToCenterLeft {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  95% {
+    offset-distance: 50%;
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 50%;
+    opacity: 0;
+  }
+}
+
+@keyframes slideToCenterRight {
+  0% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  95% {
+    offset-distance: 50%;
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 50%;
+    opacity: 0;
+  }
+}
+
+.merged-peak-node {
+  position: absolute;
+  top: 25px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.5);
+  opacity: 0;
+  transition: all 0.4s ease-out;
+  z-index: 10;
+}
+
+.zyqxa-bridge-section.animate-active .merged-peak-node {
+  animation: showMergedNode 0.3s ease-out 2.1s forwards;
+}
+
+@keyframes showMergedNode {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+.glow-orange-circle {
+  width: 35px;
+  height: 35px;
+  background-color: #ff6a00;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+}
+
+.inner-blue-box {
+  width: 15px;
+  height: 15px;
+  background-color: #011433;
+  border-radius: 0px;
+  box-shadow: none;
+}
+
+@media (max-width: 600px) {
+  .nexus-section {
+    padding: 72px 16px;
+  }
+
+  .nexus-title {
+    font-size: clamp(2rem, 9vw, 2.75rem);
+    margin-bottom: 36px;
+  }
+
+  .nexus-track {
+    gap: 24px;
+    padding-left: calc((100vw - min(450px, 100vw - 64px) - 32px) / 2);
+    padding-right: calc((100vw - min(450px, 100vw - 64px) - 32px) / 2);
+  }
+
+  .nexus-card {
+    flex-basis: min(450px, calc(100vw - 64px));
+    height: 280px;
+    padding: 28px 20px;
+  }
+
+  .nexus-info-box {
+    gap: 20px;
+  }
+
+  .zyqxa-bridge-section {
+    min-height: 100svh;
+    padding: 0 16px 64px;
+  }
+
+  .bridge-content-wrapper {
+    margin-top: 80px;
+  }
+}
