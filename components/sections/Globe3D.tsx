@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
@@ -24,15 +24,50 @@ const storyData = [
 
 export default function Globe3D() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const embedRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(1);
+  const [storyPhase, setStoryPhase] = useState<"idle" | "exit" | "enter">("idle");
+  const [hasEntered, setHasEntered] = useState(false);
+  const [isInView, setIsInView] = useState(false);
   const activeIndexRef = useRef(activeIndex);
   const globeMaterialRef = useRef<THREE.PointsMaterial | null>(null);
+  const storyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const changeStory = useCallback((nextIndex: number) => {
+    if (nextIndex === activeIndex || storyPhase !== "idle") return;
+
+    setStoryPhase("exit");
+    storyTimeoutRef.current = setTimeout(() => {
+      setActiveIndex(nextIndex);
+      setStoryPhase("enter");
+      storyTimeoutRef.current = setTimeout(() => setStoryPhase("idle"), 420);
+    }, 260);
+  }, [activeIndex, storyPhase]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % storyData.length);
-    }, 5000);
-    return () => clearInterval(interval);
+    const embed = embedRef.current;
+    if (!embed) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsInView(entry.isIntersecting);
+      if (entry.isIntersecting) setHasEntered(true);
+    }, { threshold: 0.2 });
+
+    observer.observe(embed);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isInView || storyPhase !== "idle") return;
+
+    const timeout = setTimeout(() => {
+      changeStory((activeIndex + 1) % storyData.length);
+    }, 7000);
+    return () => clearTimeout(timeout);
+  }, [activeIndex, changeStory, isInView, storyPhase]);
+
+  useEffect(() => () => {
+    if (storyTimeoutRef.current) clearTimeout(storyTimeoutRef.current);
   }, []);
 
   useEffect(() => {
@@ -53,7 +88,7 @@ export default function Globe3D() {
       0.1,
       1000
     );
-    camera.position.z = 250;
+    camera.position.z = 210;
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
@@ -172,15 +207,45 @@ export default function Globe3D() {
   }, []);
 
   return (
-    <div className="globe-3d-embed">
-      <div ref={containerRef} className="globe-3d-container" />
-      <div className="globe-3d-story">
-        <h3 className="text-xl font-bold mb-2 transition-all" style={{ color: `#${storyData[activeIndex].color.toString(16).padStart(6, '0')}` }}>
-          {storyData[activeIndex].title}
-        </h3>
-        <p className="text-sm text-gray-300 transition-opacity duration-300">
-          {storyData[activeIndex].desc}
-        </p>
+    <div
+      ref={embedRef}
+      className={`globe-3d-embed${hasEntered ? " is-visible" : ""}`}
+    >
+      <div className="globe-3d-top">
+        <div className="globe-text-left">
+          <span className="globe-subtitle">A message from ZYQXA</span>
+          <h2 className="globe-title">We Believe In</h2>
+        </div>
+        <div ref={containerRef} className="globe-3d-container" />
+        <div className="globe-text-right" aria-live="polite">
+          <h2
+            className={`globe-title-highlight globe-story-transition story-${storyPhase}`}
+            style={{ color: `#${storyData[activeIndex].color.toString(16).padStart(6, "0")}` }}
+          >
+            {storyData[activeIndex].title}
+          </h2>
+        </div>
+      </div>
+      <div className="globe-bottom-content">
+        <div className="globe-description-window">
+          <p className={`globe-description globe-story-transition story-${storyPhase}`} aria-live="polite">
+            {storyData[activeIndex].desc}
+          </p>
+        </div>
+        <div className="globe-indicators" aria-label="Choose a ZYQXA message">
+          {storyData.map((story, index) => (
+            <button
+              key={story.title}
+              type="button"
+              className={`globe-indicator${index === activeIndex ? " active" : ""}`}
+              aria-label={`Show message ${index + 1}: ${story.title}`}
+              aria-pressed={index === activeIndex}
+              onClick={() => changeStory(index)}
+            >
+              {String(index + 1).padStart(2, "0")}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -6,8 +6,8 @@ export default function Footer() {
         <div className="footer-column">
           <h4 className="footer-heading">Invest</h4>
           <ul className="footer-links-list">
-            <li><a href="#protocol-section">USDY</a></li>
-            <li><a href="#protocol-section">OUSG</a></li>
+            <li><a href="#protocol-section">IDRY</a></li>
+            <li><a href="#protocol-section">ZIDR</a></li>
             <li><a href="#bridgeSection">Bridge <span className="external-arrow">↗</span></a></li>
             <li><a href="#protocol-section">Convert <span className="external-arrow">↗</span></a></li>
             <li><a href="#protocol-section">ZYQXA Assets</a></li>

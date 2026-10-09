@@ -1,15 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState } from 'react';
+import { TransitionEvent, useEffect, useRef, useState } from 'react';
 import Footer from '@/components/layout/Footer';
 import InstitutionalSlider from '@/components/InstitutionalSlider';
 import GlobeSection from '@/components/sections/GlobeSection';
 import Header from '@/components/sections/Header';
+import TestimonialCarousel from '@/components/sections/TestimonialCarousel';
 
 export default function ZYQXAProtocolPage() {
   const [activeProtocolTab, setActiveProtocolTab] = useState<'idry' | 'zidr'>('idry');
   const [activeInsightTab, setActiveInsightTab] = useState<'intelligence' | 'research'>('intelligence');
-  const [nexusIndex, setNexusIndex] = useState(0);
+  const [nexusIndex, setNexusIndex] = useState(5);
+  const [nexusStepWidth, setNexusStepWidth] = useState(0);
+  const [nexusTransitionEnabled, setNexusTransitionEnabled] = useState(true);
   const bridgeSectionRef = useRef<HTMLElement>(null);
   const nexusTrackRef = useRef<HTMLDivElement>(null);
 
@@ -44,29 +47,56 @@ export default function ZYQXAProtocolPage() {
   useEffect(() => {
     const track = nexusTrackRef.current;
     if (!track) return;
-    const cards = Array.from(track.children) as HTMLElement[];
-    if (cards.length === 0) return;
 
-    const updatePosition = () => {
+    const measure = () => {
+      const firstCard = track.firstElementChild as HTMLElement | null;
+      if (!firstCard) return;
       const gap = Number.parseFloat(window.getComputedStyle(track).columnGap) || 0;
-      const step = cards[0].offsetWidth + gap;
-      track.style.transform = `translateX(-${step * nexusIndex}px)`;
+      setNexusStepWidth(firstCard.offsetWidth + gap);
     };
 
-    updatePosition();
-    window.addEventListener('resize', updatePosition);
-    return () => window.removeEventListener('resize', updatePosition);
-  }, [nexusIndex]);
+    const initialMeasure = window.requestAnimationFrame(measure);
+    const resizeObserver = new ResizeObserver(measure);
+    resizeObserver.observe(track);
+    return () => {
+      window.cancelAnimationFrame(initialMeasure);
+      resizeObserver.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const cardCount = nexusTrackRef.current?.children.length ?? 0;
-      if (cardCount > 0) {
-        setNexusIndex((prev) => (prev + 1) % cardCount);
-      }
+      setNexusIndex((prev) => prev + 1);
     }, 5000);
     return () => clearInterval(interval);
   }, []);
+
+  const handleNexusTransitionEnd = (event: TransitionEvent<HTMLDivElement>) => {
+    if (event.target !== event.currentTarget || event.propertyName !== 'transform') return;
+    if (nexusIndex >= 10) {
+      setNexusTransitionEnabled(false);
+      setNexusIndex(5);
+    } else if (nexusIndex < 5) {
+      setNexusTransitionEnabled(false);
+      setNexusIndex(9);
+    }
+  };
+
+  useEffect(() => {
+    if (nexusTransitionEnabled) return;
+    const frame = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => setNexusTransitionEnabled(true));
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [nexusTransitionEnabled]);
+
+  const selectNexusCard = (cardIndex: number) => {
+    const candidates = [cardIndex, cardIndex + 5, cardIndex + 10];
+    const nearestIndex = candidates.reduce((nearest, candidate) =>
+      Math.abs(candidate - nexusIndex) < Math.abs(nearest - nexusIndex) ? candidate : nearest,
+    );
+    setNexusIndex(nearestIndex);
+  };
 
 
   return (
@@ -129,7 +159,7 @@ export default function ZYQXAProtocolPage() {
           {/* Subtitle kecil */}
           <span className="protocol-subtitle">Our Protocol</span>
           
-          <div data-aos="fade-up" data-aos-anchor-placement="top-bottom">
+          <div className="animate-on-scroll">
             {/* Judul Utama */}
             <h2 className="protocol-title">
               Secure Access<br />
@@ -194,10 +224,10 @@ export default function ZYQXAProtocolPage() {
                     <img src="/BaseLG.svg" alt="Base" className="chain-logo-img" />
                   </div>
                   <div className="crypto-icon-circle polygon-bg">
-                    <img src="/globe.svg" alt="Polygon" className="chain-logo-img" />
+                    <img src="/PolygonLG.svg" alt="Polygon" className="chain-logo-img" />
                   </div>
                   <div className="crypto-icon-circle arbitrum-bg">
-                    <img src="/BridgeZ.svg" alt="Arbitrum" className="chain-logo-img" />
+                    <img src="/ArbitrumLG.svg" alt="Arbitrum" className="chain-logo-img" />
                   </div>
                 </div>
               </div>
@@ -354,10 +384,10 @@ export default function ZYQXAProtocolPage() {
                     <img src="/BaseLG.svg" alt="Base" className="chain-logo-img" />
                   </div>
                   <div className="crypto-icon-circle polygon-bg">
-                    <img src="/globe.svg" alt="Polygon" className="chain-logo-img" />
+                    <img src="/PolygonLG.svg" alt="Polygon" className="chain-logo-img" />
                   </div>
                   <div className="crypto-icon-circle arbitrum-bg">
-                    <img src="/BridgeZ.svg" alt="Arbitrum" className="chain-logo-img" />
+                    <img src="/ArbitrumLG.svg" alt="Arbitrum" className="chain-logo-img" />
                   </div>
                 </div>
               </div>
@@ -509,80 +539,7 @@ export default function ZYQXAProtocolPage() {
         </div>
       </section>
 
-      <section className="testimonial-section">
-        <div className="testimonial-container" id="testimonial-container">
-          <div className="testimonial-track" id="testimonial-track">
-            
-            {/* KARTU 1 */}
-            <div className="testimonial-card">
-              <div className="testimonial-header">
-                <div className="profile-info-group">
-                  <div className="testimonial-avatar" role="img" aria-label="Amzah Moelah">AM</div>
-                  <div className="profile-text">
-                    <h3 className="testimonial-name">Amzah Moelah</h3>
-                    <p className="testimonial-role">Lead Digital Asset Intrapreneur</p>
-                  </div>
-                </div>
-                <div className="testimonial-company-logo">
-                  <img src="/Kemenku.svg" alt="Kemenkeu Logo" />
-                </div>
-              </div>
-              <blockquote className="testimonial-quote">
-                &quot;ZYQXA is exploring how to issue various tokenized assets such as bonds, real estate and investment funds. Having purpose-built infrastructure, built by ZYQXA, to facilitate the omnichain issuance and distribution of these assets, has the potential to be highly relevant for traditional financial institutions.&quot;
-              </blockquote>
-            </div>
-
-            {/* KARTU 2 */}
-            <div className="testimonial-card">
-              <div className="testimonial-header">
-                <div className="profile-info-group">
-                  <div className="testimonial-avatar" role="img" aria-label="Larry Fink">LF</div>
-                  <div className="profile-text">
-                    <h3 className="testimonial-name">Larry Fink</h3>
-                    <p className="testimonial-role">Founder, Chairman & CEO</p>
-                  </div>
-                </div>
-              </div>
-              <blockquote className="testimonial-quote">
-                &quot;We believe the next generation for markets, the next generation for securities, will be tokenization of securities...&quot;
-              </blockquote>
-            </div>
-
-            {/* KARTU 3 */}
-            <div className="testimonial-card">
-              <div className="testimonial-header">
-                <div className="profile-info-group">
-                  <div className="testimonial-avatar" role="img" aria-label="Jane Doe">JD</div>
-                  <div className="profile-text">
-                    <h3 className="testimonial-name">Jane Doe</h3>
-                    <p className="testimonial-role">Head of DeFi Strategy</p>
-                  </div>
-                </div>
-              </div>
-              <blockquote className="testimonial-quote">
-                &quot;Tokenizing real-world assets opens up unprecedented liquidity channels and institutional-grade security across multiple chains seamlessly.&quot;
-              </blockquote>
-            </div>
-
-            {/* KARTU 4 */}
-            <div className="testimonial-card">
-              <div className="testimonial-header">
-                <div className="profile-info-group">
-                  <div className="testimonial-avatar" role="img" aria-label="Alex Rivera">AR</div>
-                  <div className="profile-text">
-                    <h3 className="testimonial-name">Alex Rivera</h3>
-                    <p className="testimonial-role">Chief Technology Officer</p>
-                  </div>
-                </div>
-              </div>
-              <blockquote className="testimonial-quote">
-                &quot;The robust architecture provided by ZYQXA allows us to deploy smart contracts faster and with absolute compliance confidence.&quot;
-              </blockquote>
-            </div>
-
-          </div>
-        </div>
-      </section>
+      <TestimonialCarousel />
 
       <GlobeSection />
 
@@ -698,48 +655,33 @@ export default function ZYQXAProtocolPage() {
 
           {/* Token Carousel / Showcase Track */}
           <div className="nexus-slider-wrapper">
-            <div className="nexus-track" ref={nexusTrackRef}>
-              
-              {/* Token Card 1: IDRY */}
-              <div className={`nexus-card ${nexusIndex === 0 ? 'active' : ''}`} onClick={() => setNexusIndex(0)}>
-                <div className="nexus-logo-icon">
-                  <img src="/IDRY.svg" alt="IDRY Logo" className="dropdown-asset-logo" />
-                </div>
-                <h3 className="nexus-token-name">IDRY</h3>
-              </div>
-
-              {/* Token Card 2: ZIDR */}
-              <div className={`nexus-card ${nexusIndex === 1 ? 'active' : ''}`} onClick={() => setNexusIndex(1)}>
-                <div className="nexus-logo-icon">
-                  <img src="/ZIDR.svg" alt="ZIDR Logo" className="dropdown-asset-logo" />
-                </div>
-                <h3 className="nexus-token-name">ZIDR</h3>
-              </div>
-
-              {/* Token Card 3: Midtrans */}
-              <div className={`nexus-card ${nexusIndex === 2 ? 'active' : ''}`} onClick={() => setNexusIndex(2)}>
-                <div className="nexus-logo-icon">
-                  <img src="/KATAZYQ.svg" alt="Midtrans Logo" className="dropdown-asset-logo" />
-                </div>
-                <h3 className="nexus-token-name">Midtrans</h3>
-              </div>
-
-              {/* Token Card 4: BRI */}
-              <div className={`nexus-card ${nexusIndex === 3 ? 'active' : ''}`} onClick={() => setNexusIndex(3)}>
-                <div className="nexus-logo-icon">
-                  <img src="/ZFoundation.svg" alt="BRI Logo" className="dropdown-asset-logo" />
-                </div>
-                <h3 className="nexus-token-name">BRI</h3>
-              </div>
-
-              {/* Token Card 5: Z-Vault */}
-              <div className={`nexus-card ${nexusIndex === 4 ? 'active' : ''}`} onClick={() => setNexusIndex(4)}>
-                <div className="nexus-logo-icon">
-                  <img src="/VaultPZ.svg" alt="Z-Vault Logo" className="dropdown-asset-logo" />
-                </div>
-                <h3 className="nexus-token-name">Z-Vault</h3>
-              </div>
-
+            <div
+              className={`nexus-track${nexusTransitionEnabled ? '' : ' no-transition'}`}
+              ref={nexusTrackRef}
+              onTransitionEnd={handleNexusTransitionEnd}
+              style={{ transform: `translateX(-${nexusStepWidth * nexusIndex}px)` }}
+            >
+              {[0, 1, 2].flatMap((copy) => [
+                { name: 'IDRY', logo: '/IDRY.svg' },
+                { name: 'ZIDR', logo: '/ZIDR.svg' },
+                { name: 'Midtrans', logo: '/KATAZYQ.svg' },
+                { name: 'BRI', logo: '/ZFoundation.svg' },
+                { name: 'Z-Vault', logo: '/VaultPZ.svg' },
+              ].map((token, index) => {
+                const trackIndex = copy * 5 + index;
+                return (
+                  <div
+                    className={`nexus-card ${nexusIndex === trackIndex ? 'active' : ''}`}
+                    key={`${copy}-${token.name}`}
+                    onClick={() => selectNexusCard(index)}
+                  >
+                    <div className="nexus-logo-icon">
+                      <img src={token.logo} alt={`${token.name} Logo`} className="dropdown-asset-logo" />
+                    </div>
+                    <h3 className="nexus-token-name">{token.name}</h3>
+                  </div>
+                );
+              }))}
             </div>
           </div>
 

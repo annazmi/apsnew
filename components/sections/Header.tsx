@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import MobileDrawer from "@/components/layout/MobileDrawer";
 import Navbar from "@/components/layout/Navbar";
 
-export default function Header() {
+interface HeaderProps {
+  lightBackground?: boolean;
+}
+
+export default function Header({ lightBackground = false }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -24,6 +28,7 @@ export default function Header() {
         isScrolled={isScrolled}
         isMenuOpen={isMobileMenuOpen}
         onMenuToggle={() => setIsMobileMenuOpen((isOpen) => !isOpen)}
+        lightBackground={lightBackground}
       />
       <MobileDrawer
         isOpen={isMobileMenuOpen}

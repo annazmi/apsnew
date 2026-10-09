@@ -1,0 +1,466 @@
+.idry-page {
+  min-height: 100vh;
+  background: #e1ecff;
+  color: #10213e;
+}
+
+.idry-hero {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 75% 80%, rgba(184, 211, 255, 0.25), transparent 34%),
+    #e1ecff;
+}
+
+.idry-hero-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: calc(100% - 5.5rem);
+  max-width: 1280px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: clamp(190px, 23vh, 245px) 0 28px;
+}
+
+.idry-copy {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 600px);
+}
+
+.idry-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.idry-brand-icon {
+  display: grid;
+  width: 38px;
+  height: 42px;
+  flex: 0 0 auto;
+  place-items: center;
+  overflow: hidden;
+}
+
+.idry-brand-icon img {
+  display: block;
+  width: 34px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.idry-brand-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.idry-brand-name {
+  font-size: 21px;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.idry-brand-description {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 14px;
+}
+
+.idry-copy h1 {
+  margin: 0;
+  color: #10213e;
+  font-size: clamp(44px, 5.2vw, 64px);
+  font-weight: 500;
+  letter-spacing: -0.065em;
+  line-height: 0.99;
+}
+
+.idry-copy h1 span {
+  color: #3b66a7;
+}
+
+.idry-description {
+  max-width: 520px;
+  margin: 20px 0 24px;
+  color: #465670;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.idry-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.idry-actions a {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.idry-actions a:hover {
+  transform: translateY(-1px);
+}
+
+.idry-action-primary {
+  background: #1c1c1c;
+  color: #fff;
+}
+
+.idry-action-primary:hover {
+  background: #343434;
+}
+
+.idry-action-secondary {
+  background: rgba(16, 33, 62, 0.1);
+  color: #10213e;
+}
+
+.idry-action-secondary:hover {
+  background: rgba(16, 33, 62, 0.16);
+}
+
+.idry-metrics {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  width: min(100%, 510px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 56px 0 0;
+}
+
+.idry-metric {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.idry-metric dt {
+  margin-bottom: 2px;
+  color: #365b94;
+  font-size: 14px;
+}
+
+.idry-metric dd {
+  margin: 0;
+  color: #10213e;
+  font-size: clamp(25px, 3vw, 36px);
+  font-weight: 500;
+  letter-spacing: -0.07em;
+  line-height: 1.05;
+  white-space: nowrap;
+}
+
+.idry-metric > span {
+  margin-top: 5px;
+  color: #586984;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.03em;
+}
+
+.idry-artwork {
+  position: absolute;
+  right: -10%;
+  bottom: -4%;
+  width: min(56vw, 650px);
+  height: 390px;
+  perspective: 900px;
+  pointer-events: none;
+}
+
+.idry-glass {
+  position: absolute;
+  left: 5%;
+  width: 86%;
+  height: 150px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 27px;
+  background:
+    linear-gradient(165deg, rgba(255, 255, 255, 0.42), rgba(127, 174, 248, 0.18) 48%, rgba(69, 122, 204, 0.42)),
+    rgba(139, 183, 249, 0.38);
+  box-shadow:
+    0 24px 34px rgba(53, 100, 169, 0.2),
+    inset 0 2px 4px rgba(255, 255, 255, 0.8),
+    inset 0 -4px 8px rgba(58, 109, 188, 0.18);
+  transform: rotateX(57deg) rotateZ(-11deg);
+  transform-style: preserve-3d;
+}
+
+.idry-glass-top {
+  top: 7%;
+  z-index: 3;
+}
+
+.idry-glass-middle {
+  top: 29%;
+  z-index: 2;
+  opacity: 0.82;
+}
+
+.idry-glass-bottom {
+  top: 51%;
+  z-index: 1;
+  opacity: 0.7;
+}
+
+.idry-section-inner {
+  width: calc(100% - 5.5rem);
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.idry-yield-section {
+  min-height: 640px;
+  display: flex;
+  align-items: center;
+  padding: 100px 0;
+  background: #fff;
+}
+
+.idry-yield-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  align-items: start;
+  gap: clamp(36px, 7vw, 110px);
+}
+
+.idry-section-copy h2 {
+  margin: 0 0 28px;
+  color: #080a0e;
+  font-size: clamp(40px, 4.5vw, 58px);
+  font-weight: 500;
+  letter-spacing: -0.065em;
+  line-height: 1.02;
+}
+
+.idry-section-copy h2 sup {
+  position: relative;
+  top: -0.2em;
+  margin-left: 3px;
+  font-size: 0.42em;
+}
+
+.idry-section-copy p {
+  max-width: 500px;
+  margin: 0 0 28px;
+  color: #465670;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.idry-section-copy .idry-action-primary {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.idry-chart {
+  min-width: 0;
+}
+
+.idry-chart-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 12px;
+}
+
+.idry-chart-price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.idry-chart-price > span {
+  color: #080a0e;
+  font-size: 28px;
+  letter-spacing: -0.06em;
+}
+
+.idry-chart-price small {
+  color: #258b6d;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 10px;
+}
+
+.idry-chart-ranges {
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid #e3e5e8;
+  border-radius: 7px;
+}
+
+.idry-chart-ranges button {
+  padding: 5px 8px;
+  border-radius: 5px;
+  color: #42536c;
+  font-size: 12px;
+}
+
+.idry-chart-ranges button[aria-pressed="true"] {
+  background: #f0f2f5;
+  color: #111827;
+  font-weight: 700;
+}
+
+.idry-chart-svg {
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+.idry-chart-grid {
+  stroke: #e5e7eb;
+  stroke-width: 1;
+}
+
+.idry-chart-axis {
+  fill: #17243a;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 10px;
+}
+
+.idry-chart-line {
+  stroke: #172d50;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.idry-chart-note {
+  margin: 8px 0 0;
+  color: #6b7280;
+  font-size: 11px;
+}
+
+@media (max-width: 900px) {
+  .idry-hero-inner {
+    padding-top: 190px;
+  }
+
+  .idry-artwork {
+    right: -25%;
+    bottom: 0;
+    width: 65vw;
+    opacity: 0.7;
+  }
+
+  .idry-yield-layout {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+  .idry-yield-section {
+    min-height: 0;
+    padding: 80px 0;
+  }
+
+  .idry-section-copy p {
+    max-width: 640px;
+  }
+}
+
+@media (max-width: 600px) {
+  .idry-hero {
+    min-height: 100svh;
+  }
+
+  .idry-hero-inner {
+    width: calc(100% - 2.5rem);
+    min-height: 100svh;
+    padding-top: 160px;
+  }
+
+  .idry-brand {
+    margin-bottom: 22px;
+  }
+
+  .idry-copy h1 {
+    font-size: clamp(40px, 11vw, 56px);
+  }
+
+  .idry-description {
+    font-size: 15px;
+  }
+
+  .idry-metrics {
+    gap: 8px;
+    margin-top: 44px;
+  }
+
+  .idry-metric dd {
+    font-size: clamp(22px, 7vw, 30px);
+  }
+
+  .idry-artwork {
+    right: -47%;
+    bottom: -1%;
+    width: 105vw;
+    height: 270px;
+    opacity: 0.42;
+  }
+
+  .idry-glass {
+    height: 112px;
+  }
+
+  .idry-section-inner {
+    width: calc(100% - 2.5rem);
+  }
+
+  .idry-yield-section {
+    padding: 64px 0;
+  }
+
+  .idry-section-copy h2 {
+    margin-bottom: 20px;
+    font-size: clamp(38px, 10vw, 50px);
+  }
+
+  .idry-chart-header {
+    flex-direction: column;
+  }
+
+  .idry-chart-svg {
+    min-width: 490px;
+  }
+
+  .idry-chart {
+    overflow-x: auto;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .idry-actions a {
+    transition: none;
+  }
+}

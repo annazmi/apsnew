@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({ 
   subsets: ["latin"],
   variable: "--font-jakarta",
+});
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
 });
 
 export const metadata: Metadata = {
@@ -32,7 +36,7 @@ export default function RootLayout({
 }) {
   return (
     // 3. Masukkan variabel jakarta ke tag <html>
-    <html lang="en" className={jakarta.variable}>
+    <html lang="en" className={`${jakarta.variable} ${jetBrainsMono.variable}`}>
       <body className="bg-background text-foreground antialiased">
         {/* Render halaman utama */}
         {children}

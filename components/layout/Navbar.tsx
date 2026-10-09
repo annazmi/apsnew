@@ -1,13 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "./Navbar.module.css";
+
+type DropdownMenu = "products" | "resources" | "ecosystem" | "about";
 
 interface NavbarProps {
   onMenuToggle?: () => void;
   isMenuOpen?: boolean;
   isScrolled?: boolean;
+  lightBackground?: boolean;
 }
 
 const productPreviewImages: Record<string, string> = {
@@ -24,10 +27,21 @@ export default function Navbar({
   onMenuToggle,
   isMenuOpen = false,
   isScrolled = false,
+  lightBackground = false,
 }: NavbarProps) {
   const navRef = useRef<HTMLElement>(null);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const dropdownRefs = useRef<Record<DropdownMenu, HTMLDivElement | null>>({
+    products: null,
+    resources: null,
+    ecosystem: null,
+    about: null,
+  });
+  const dropdownShellRef = useRef<HTMLDivElement>(null);
+  const [activeDropdown, setActiveDropdown] = useState<DropdownMenu | null>(null);
   const [previewImage, setPreviewImage] = useState(productPreviewImages.idry);
+  const [resourcePreviewImage, setResourcePreviewImage] = useState("/TransparencyHubIcon.svg");
+  const [ecosystemPreviewImage, setEcosystemPreviewImage] = useState("/ZEcosystem.svg");
+  const [aboutPreviewImage, setAboutPreviewImage] = useState("/Docs & FAQs.svg");
 
   useEffect(() => {
     const closeOnOutsideClick = (event: PointerEvent) => {
@@ -47,30 +61,53 @@ export default function Navbar({
     };
   }, []);
 
-  const toggleDropdown = (menu: string) => {
-    setActiveDropdown((current) => current === menu ? null : menu);
-  };
+  useLayoutEffect(() => {
+    const shell = dropdownShellRef.current;
+    if (!shell) return;
+
+    if (!activeDropdown) {
+      shell.style.height = "0px";
+      return;
+    }
+
+    const activePanel = dropdownRefs.current[activeDropdown];
+    if (!activePanel) return;
+
+    const updateHeight = () => {
+      shell.style.height = `${activePanel.getBoundingClientRect().height}px`;
+    };
+    updateHeight();
+
+    const resizeObserver = new ResizeObserver(updateHeight);
+    resizeObserver.observe(activePanel);
+    return () => resizeObserver.disconnect();
+  }, [activeDropdown]);
 
   return (
-    <header className={`${styles.header} ${isScrolled ? styles.headerScrolled : ""}`}>
+    <header className={`${styles.header} ${isScrolled ? styles.headerScrolled : ""} ${lightBackground ? styles.lightHeader : ""}`}>
       <div className={styles.topBanner}>
-        <span>ZYQXA Launches 24/7 Minting & Redemption for Tokenized SBN</span>
+        <span>ZYQXA Launches <span className="numeric-text">24/7</span> Minting &amp; Redemption for Tokenized SBN</span>
         <Link href="/learn-more">Learn More</Link>
       </div>
 
       <div className={styles.headerInner}>
-        <a href="#hero" className={styles.logo} aria-label="ZYQXA">
+        <Link href="/" className={styles.logo} aria-label="ZYQXA">
           <img src="/LOG ZYQXA.svg" alt="ZYQXA logo" />
-        </a>
+        </Link>
           
-        <nav ref={navRef} aria-label="Primary navigation" className={styles.nav}>
+        <nav
+          ref={navRef}
+          aria-label="Primary navigation"
+          className={styles.nav}
+          onMouseLeave={() => setActiveDropdown(null)}
+        >
           {/* =================================================== */}
           {/* 1. MENU PRODUCTS */}
           {/* =================================================== */}
           <div className={`${styles.productsDropdownWrapper} ${activeDropdown === "products" ? styles.menuOpen : ""}`}>
-            <button type="button" className={styles.navLink} aria-expanded={activeDropdown === "products"} onClick={() => toggleDropdown("products")}>Products</button>
+            <button type="button" className={styles.navLink} aria-expanded={activeDropdown === "products"} onMouseEnter={() => setActiveDropdown("products")} onFocus={() => setActiveDropdown("products")} onClick={() => setActiveDropdown("products")}>Products</button>
             
-            <div className={styles.dropdownBox}>
+            <div ref={(element) => { dropdownRefs.current.products = element; }} className={styles.dropdownBox}>
               <div className={styles.dropdownGridLayout}>
             
                 {/* KOLOM KIRI: Daftar Aset & Protokol */}
@@ -78,7 +115,7 @@ export default function Navbar({
                   <h3 className={styles.dropdownHeading}>Assets</h3>
                   
                   {/* Item IDRY */}
-                  <div className={styles.dropdownAssetRow} data-preview="idry" onMouseEnter={() => setPreviewImage(productPreviewImages.idry)}>
+                  <Link href="/idry" className={styles.dropdownAssetRow} data-preview="idry" onMouseEnter={() => setPreviewImage(productPreviewImages.idry)} onClick={() => setActiveDropdown(null)}>
                     <div className={styles.dropdownLogoBox}>
                       <img src="/IDRY.svg" alt="Logo IDRY" className={`${styles.dropdownAssetLogo} ${styles.idryLogo}`} />
                     </div>
@@ -89,7 +126,7 @@ export default function Navbar({
                       </div>
                       <span className={styles.dropdownAssetDesc}>Tokenized Indonesian sovereign bonds for DeFi yield.</span>
                     </div>
-                  </div>
+                  </Link>
 
                   {/* Item ZIDR */}
                   <div className={styles.dropdownAssetRow} data-preview="zidr" onMouseEnter={() => setPreviewImage(productPreviewImages.zidr)}>
@@ -152,7 +189,7 @@ export default function Navbar({
                 {/* KOLOM KANAN: Kotak Preview Animasi 3D & Infrastructure di Bawahnya */}
                 <div className={styles.dropdownRightColumn}>
                   <div className={styles.dropdownPreviewBox}>
-                    <div className={styles.previewLogoContainer}>
+                    <div key={previewImage} className={styles.previewLogoContainer}>
                       <img src={previewImage} id="preview-logo-img" className={styles.floatingLogo} alt="Product preview" />
                     </div>
                   </div>
@@ -198,14 +235,14 @@ export default function Navbar({
           {/* 2. MENU RESOURCES */}
           {/* =================================================== */}
           <div className={`${styles.productsDropdownWrapper} ${styles.resourcesDropdownWrapper} ${activeDropdown === "resources" ? styles.menuOpen : ""}`}>
-            <button type="button" className={styles.navLink} aria-expanded={activeDropdown === "resources"} onClick={() => toggleDropdown("resources")}>Resources</button>
+            <button type="button" className={styles.navLink} aria-expanded={activeDropdown === "resources"} onMouseEnter={() => setActiveDropdown("resources")} onFocus={() => setActiveDropdown("resources")} onClick={() => setActiveDropdown("resources")}>Resources</button>
             
-            <div className={styles.dropdownBox}>
+            <div ref={(element) => { dropdownRefs.current.resources = element; }} className={styles.dropdownBox}>
               <div className={styles.dropdownGridLayout}>
             
                 <div className={styles.dropdownLeftColumn}>
                   
-                  <div className={`${styles.dropdownAssetRow} ${styles.active}`} onMouseEnter={() => setPreviewImage("/TransparencyHubIcon.svg")}>
+                  <div className={styles.dropdownAssetRow} onMouseEnter={() => setResourcePreviewImage("/TransparencyHubIcon.svg")}>
                     <div className={styles.dropdownLogoBox}>
                       <img src="/TransparencyHubIcon.svg" alt="Transparency Hub" className={`${styles.dropdownAssetLogo} ${styles.transparencyHubLogo}`} />
                     </div>
@@ -217,7 +254,7 @@ export default function Navbar({
                     </div>
                   </div>
 
-                  <div className={styles.dropdownAssetRow} onMouseEnter={() => setPreviewImage("/ProtocolDocsIcon.svg")}>
+                  <div className={styles.dropdownAssetRow} onMouseEnter={() => setResourcePreviewImage("/ProtocolDocsIcon.svg")}>
                     <div className={styles.dropdownLogoBox}>
                       <img src="/ProtocolDocsIcon.svg" alt="Protocol Docs" className={`${styles.dropdownAssetLogo} ${styles.protocolDocsLogo}`} />
                     </div>
@@ -229,7 +266,7 @@ export default function Navbar({
                     </div>
                   </div>
 
-                  <div className={styles.dropdownAssetRow} onMouseEnter={() => setPreviewImage("/LearnIcon.svg")}>
+                  <div className={styles.dropdownAssetRow} onMouseEnter={() => setResourcePreviewImage("/LearnIcon.svg")}>
                     <div className={styles.dropdownLogoBox}>
                       <img src="/LearnIcon.svg" alt="ZYQXA Learn" className={`${styles.dropdownAssetLogo} ${styles.zyqxaLearnLogo}`} />
                     </div>
@@ -245,8 +282,8 @@ export default function Navbar({
 
                 <div className={styles.dropdownRightColumn}>
                   <div className={styles.dropdownPreviewBox}>
-                    <div className={styles.previewLogoContainer}>
-                      <img src="/TransparencyHubIcon.svg" id="resource-preview-img" className={styles.floatingLogo} alt="Resource Preview Feature" />
+                    <div key={resourcePreviewImage} className={styles.previewLogoContainer}>
+                      <img src={resourcePreviewImage} id="resource-preview-img" className={styles.floatingLogo} alt="Resource Preview Feature" />
                     </div>
                   </div>
                 </div>
@@ -259,14 +296,14 @@ export default function Navbar({
           {/* 3. MENU ECOSYSTEM */}
           {/* =================================================== */}
           <div className={`${styles.productsDropdownWrapper} ${styles.ecosystemDropdownWrapper} ${activeDropdown === "ecosystem" ? styles.menuOpen : ""}`}>
-            <button type="button" className={styles.navLink} aria-expanded={activeDropdown === "ecosystem"} onClick={() => toggleDropdown("ecosystem")}>Ecosystem</button>
+            <button type="button" className={styles.navLink} aria-expanded={activeDropdown === "ecosystem"} onMouseEnter={() => setActiveDropdown("ecosystem")} onFocus={() => setActiveDropdown("ecosystem")} onClick={() => setActiveDropdown("ecosystem")}>Ecosystem</button>
             
-            <div className={styles.dropdownBox}>
+            <div ref={(element) => { dropdownRefs.current.ecosystem = element; }} className={styles.dropdownBox}>
               <div className={styles.dropdownGridLayout}>
             
                 <div className={styles.dropdownLeftColumn}>
                   
-                  <div className={`${styles.dropdownAssetRow} ${styles.active}`} onMouseEnter={() => setPreviewImage("/ZEcosystem.svg")}>
+                  <div className={styles.dropdownAssetRow} onMouseEnter={() => setEcosystemPreviewImage("/ZEcosystem.svg")}>
                     <div className={styles.dropdownLogoBox}>
                       <img src="/ZEcosystem.svg" alt="ZYQXA Ecosystem" className={`${styles.dropdownAssetLogo} ${styles.zyqxaEcosystemLogo}`} />
                     </div>
@@ -278,7 +315,7 @@ export default function Navbar({
                     </div>
                   </div>
 
-                  <div className={styles.dropdownAssetRow} onMouseEnter={() => setPreviewImage("/ZCatalyst.svg")}>
+                  <div className={styles.dropdownAssetRow} onMouseEnter={() => setEcosystemPreviewImage("/ZCatalyst.svg")}>
                     <div className={styles.dropdownLogoBox}>
                       <img src="/ZCatalyst.svg" alt="Catalyst" className={`${styles.dropdownAssetLogo} ${styles.catalystLogo}`} />
                     </div>
@@ -290,7 +327,7 @@ export default function Navbar({
                     </div>
                   </div>
 
-                  <div className={styles.dropdownAssetRow} onMouseEnter={() => setPreviewImage("/ZFoundation.svg")}>
+                  <div className={styles.dropdownAssetRow} onMouseEnter={() => setEcosystemPreviewImage("/ZFoundation.svg")}>
                     <div className={styles.dropdownLogoBox}>
                       <img src="/ZFoundation.svg" alt="ZYQXA Foundation" className={`${styles.dropdownAssetLogo} ${styles.zyqxaFoundationLogo}`} />
                     </div>
@@ -306,8 +343,8 @@ export default function Navbar({
 
                 <div className={styles.dropdownRightColumn}>
                   <div className={styles.dropdownPreviewBox}>
-                    <div className={styles.previewLogoContainer}>
-                      <img src="/ZEcosystem.svg" id="ecosystem-preview-img" className={styles.floatingLogo} alt="Ecosystem Preview Feature" />
+                    <div key={ecosystemPreviewImage} className={styles.previewLogoContainer}>
+                      <img src={ecosystemPreviewImage} id="ecosystem-preview-img" className={styles.floatingLogo} alt="Ecosystem Preview Feature" />
                     </div>
                   </div>
                 </div>
@@ -320,14 +357,14 @@ export default function Navbar({
           {/* 4. MENU ABOUT */}
           {/* =================================================== */}
           <div className={`${styles.productsDropdownWrapper} ${styles.aboutDropdownWrapper} ${activeDropdown === "about" ? styles.menuOpen : ""}`}>
-            <button type="button" className={styles.navLink} aria-expanded={activeDropdown === "about"} onClick={() => toggleDropdown("about")}>About</button>
+            <button type="button" className={styles.navLink} aria-expanded={activeDropdown === "about"} onMouseEnter={() => setActiveDropdown("about")} onFocus={() => setActiveDropdown("about")} onClick={() => setActiveDropdown("about")}>About</button>
             
-            <div className={styles.dropdownBox}>
+            <div ref={(element) => { dropdownRefs.current.about = element; }} className={styles.dropdownBox}>
               <div className={styles.dropdownGridLayout}>
                 
                 <div className={styles.dropdownLeftColumn}>
                   
-                  <div className={`${styles.dropdownAssetRow} ${styles.active}`} onMouseEnter={() => setPreviewImage("/Docs & FAQs.svg")}>
+                  <div className={styles.dropdownAssetRow} onMouseEnter={() => setAboutPreviewImage("/Docs & FAQs.svg")}>
                     <div className={styles.dropdownLogoBox}>
                       <img src="/Docs & FAQs.svg" alt="Docs & FAQs" className={`${styles.dropdownAssetLogo} ${styles.docsFaqsLogo}`} />
                     </div>
@@ -339,7 +376,7 @@ export default function Navbar({
                     </div>
                   </div>
 
-                  <div className={styles.dropdownAssetRow} onMouseEnter={() => setPreviewImage("/Trust and Security.svg")}>
+                  <div className={styles.dropdownAssetRow} onMouseEnter={() => setAboutPreviewImage("/Trust and Security.svg")}>
                     <div className={styles.dropdownLogoBox}>
                       <img src="/Trust and Security.svg" alt="Trust and Security" className={`${styles.dropdownAssetLogo} ${styles.trustSecurityLogo}`} />
                     </div>
@@ -351,7 +388,7 @@ export default function Navbar({
                     </div>
                   </div>
 
-                  <div className={styles.dropdownAssetRow} onMouseEnter={() => setPreviewImage("/Career.svg")}>
+                  <div className={styles.dropdownAssetRow} onMouseEnter={() => setAboutPreviewImage("/Career.svg")}>
                     <div className={styles.dropdownLogoBox}>
                       <img src="/Career.svg" alt="Careers" className={`${styles.dropdownAssetLogo} ${styles.careersLogo}`} />
                     </div>
@@ -363,7 +400,7 @@ export default function Navbar({
                     </div>
                   </div>
 
-                  <div className={styles.dropdownAssetRow} onMouseEnter={() => setPreviewImage("/Team.svg")}>
+                  <div className={styles.dropdownAssetRow} onMouseEnter={() => setAboutPreviewImage("/Team.svg")}>
                     <div className={styles.dropdownLogoBox}>
                       <img src="/Team.svg" alt="Team" className={`${styles.dropdownAssetLogo} ${styles.teamLogo}`} />
                     </div>
@@ -379,13 +416,13 @@ export default function Navbar({
 
                 <div className={styles.dropdownRightColumn}>
                   <div className={styles.dropdownPreviewBox}>
-                    <div className={styles.previewLogoContainer}>
-                      <img src="/Docs & FAQs.svg" id="about-preview-img" className={styles.floatingLogo} alt="About Preview Feature" />
+                    <div key={aboutPreviewImage} className={styles.previewLogoContainer}>
+                      <img src={aboutPreviewImage} id="about-preview-img" className={styles.floatingLogo} alt="About Preview Feature" />
                     </div>
                   </div>
 
                   <div className={styles.dropdownInfrastructureWrapper}>
-                    <div className={styles.dropdownAssetRow} onMouseEnter={() => setPreviewImage("/Contact Us.svg")}>
+                    <div className={styles.dropdownAssetRow} onMouseEnter={() => setAboutPreviewImage("/Contact Us.svg")}>
                       <div className={styles.dropdownLogoBox}>
                         <img src="/Contact Us.svg" alt="Contact Us" className={`${styles.dropdownAssetLogo} ${styles.contactUsLogo}`} />
                       </div>
@@ -423,6 +460,11 @@ export default function Navbar({
           <span className={styles.bar}></span>
         </button>
       </div>
+      <div
+        ref={dropdownShellRef}
+        aria-hidden="true"
+        className={`${styles.dropdownShell} ${activeDropdown ? styles.dropdownShellOpen : ""}`}
+      />
     </header>
   );
 }
