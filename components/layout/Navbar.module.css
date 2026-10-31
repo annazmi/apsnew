@@ -39,10 +39,10 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  max-width: 1280px;
+  max-width: 100%;
   min-height: 72px;
   margin: 0 auto;
-  padding: 1rem 0.75rem;
+  padding: 1rem 4rem;
   box-sizing: border-box;
   transition: min-height 0.28s ease, max-width 0.28s ease, padding 0.28s ease;
 }
@@ -116,13 +116,13 @@
 
 .dropdownShell {
   position: fixed;
-  top: 142px;
+  top: 110px;
   left: 50%;
   z-index: 1;
   width: min(900px, calc(100vw - 32px));
   box-sizing: border-box;
   transform: translateX(-50%);
-  overflow: hidden;
+  overflow: visible;
   border: 1px solid var(--card-border, rgba(255, 255, 255, 0.12));
   border-radius: 16px;
   background: #000;
@@ -137,9 +137,21 @@
   pointer-events: none;
 }
 
+.dropdownShell::before {
+  content: "";
+  position: absolute;
+  top: -25px; 
+  left: 0;
+  width: 100%;
+  height: 20px; 
+  background: transparent;
+  z-index: 999;
+}
+
 .dropdownShellOpen {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
   transition:
     height 0.42s cubic-bezier(0.2, 1, 0.2, 1),
     opacity 0.18s ease,
@@ -225,7 +237,7 @@
   transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 30px;
   z-index: 2;
   background: transparent;
   padding: 8px 20px;
@@ -284,14 +296,14 @@
 
 .dropdownBox {
   position: fixed;
-  top: 142px;
+  top: 85px;
   left: 50%;
   transform: translateX(-50%);
   width: min(900px, calc(100vw - 32px));
   min-height: 240px;
   max-height: calc(100dvh - 88px);
   overflow-y: auto;
-  padding: 24px 26px;
+  padding: 20px 26px;
   border-radius: 16px;
   background: transparent;
   border: 1px solid transparent;
@@ -356,8 +368,8 @@
 .dropdownAssetRow { 
   display: flex; 
   align-items: center; 
-  gap: 16px; 
-  padding: 8px 14px; 
+  gap: 10px; 
+  padding: 4px 10px; 
   border-radius: 12px; 
   transition: background-color 0.2s ease; 
   cursor: pointer; 
@@ -579,6 +591,7 @@ a.dropdownAssetRow:focus-visible {
   .hamburger {
     display: flex;
   }
+  
   .headerInner {
     padding: 0.8rem 1rem;
   }

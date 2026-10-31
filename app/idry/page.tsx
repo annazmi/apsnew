@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { Metadata } from "next";
-import Header from "@/components/sections/Header";
+import Navbar from "@/components/layout/Navbar"; // <-- Diperbaiki ke Navbar
 import IdryYieldChart from "@/components/sections/IdryYieldChart";
 
 export const metadata: Metadata = {
@@ -17,7 +17,9 @@ const metrics = [
 export default function IdryPage() {
   return (
     <div className="idry-page">
-      <Header lightBackground />
+      {/* Menggunakan Navbar dengan prop lightBackground */}
+      <Navbar lightBackground />
+
       <main>
         <section className="idry-hero" aria-labelledby="idry-title">
           <div className="idry-hero-inner">
@@ -75,27 +77,6 @@ export default function IdryPage() {
           <div className="idry-section-inner idry-yield-layout">
             <div className="idry-section-copy">
               <h2 id="idry-yield-title">
-                Safe, Daily Yield.
-                <br />
-                Now 3.75% APY<sup>1</sup>
-              </h2>
-              <p>
-                IDRY brings tokenized Indonesian sovereign bonds onchain,
-                combining access to sovereign-backed assets with the utility of
-                decentralized finance.
-              </p>
-              <a href="https://app.zyqxa.id" className="idry-action-primary">
-                Buy IDRY
-              </a>
-            </div>
-            <IdryYieldChart />
-          </div>
-        </section>
-
-        <section className="idry-yield-section" aria-labelledby="idry-yield-secondary-title">
-          <div className="idry-section-inner idry-yield-layout">
-            <div className="idry-section-copy">
-              <h2 id="idry-yield-secondary-title">
                 Safe, Daily Yield.
                 <br />
                 Now 3.75% APY<sup>1</sup>
